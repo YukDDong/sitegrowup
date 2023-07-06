@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.72300800.css",
-    "main.js": "/static/js/main.fb3da928.js",
-    "index.html": "/index.html",
-    "main.72300800.css.map": "/static/css/main.72300800.css.map",
-    "main.fb3da928.js.map": "/static/js/main.fb3da928.js.map"
+    "main.css": "/waglewagle/static/css/main.72300800.css",
+    "main.js": "/waglewagle/static/js/main.2da706e6.js",
+    "index.html": "/waglewagle/index.html",
+    "main.72300800.css.map": "/waglewagle/static/css/main.72300800.css.map",
+    "main.2da706e6.js.map": "/waglewagle/static/js/main.2da706e6.js.map"
   },
   "entrypoints": [
     "static/css/main.72300800.css",
-    "static/js/main.fb3da928.js"
+    "static/js/main.2da706e6.js"
   ]
 }
