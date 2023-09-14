@@ -70,6 +70,7 @@ const Title = styled.div`
     font-family: var(--font-hunmin);
     font-size: 110px;
     font-weight: 400;
+    color: #222222;
   }
   p {
     margin: 50px 0 0;
@@ -77,6 +78,7 @@ const Title = styled.div`
     font-size: 24px;
     line-height: 40px;
     letter-spacing: -1px;
+    color: #424242;
   }
 `
 
