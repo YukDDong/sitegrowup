@@ -4,7 +4,7 @@ import Login from "./pages/Login/Login";
 import Join from "./pages/Join/Join";
 import Main from "./pages/Main/Main";
 import MakeHopae from "./pages/MakeHopae/MakeHopae";
-import KakaoLogin from "./pages/KakaoLogin/KakaoLogin";
+// import KakaoLogin from "./pages/KakaoLogin/KakaoLogin";
 import FindPwd from "./pages/FindPwd/FindPwd";
 import MakeGiwaHouse from "./pages/MakeGiwaHouse/MakeGiwaHouse";
 import StorageGiwa from "./pages/StorageGiwa/StorageGiwa";
@@ -14,13 +14,16 @@ import MyPage from "./pages/MyPage/MyPage";
 import ChangePwd from "./pages/ChangePwd/ChangePwd";
 import ConfirmPwd from "./pages/ChangePwd/ConfirmPwd";
 import Error from "./pages/Error/Error";
-import AuthRoute from "./component/AuthRoute/AuthRoute";
+// import AuthRoute from "./component/AuthRoute/AuthRoute";
 import { useEffect } from "react";
 import { getItem } from "./utils/storage";
 import { useDispatch } from "react-redux";
 import { login } from "./redux/actions/userActions";
 import Logout from "./pages/Logout/Logout";
-import NaverLogin from "./pages/NaverLogin/NaverLogin";
+// import NaverLogin from "./pages/NaverLogin/NaverLogin";
+
+// 개발테스트용 임시 권한 제한 풀어놓음
+// 백엔드 서버 올라오면 다시 수정해야함
 
 const routes = [
   {
@@ -29,11 +32,13 @@ const routes = [
   },
   {
     path: "/login",
-    element: <AuthRoute loginOption={false} component={<Login />} />,
+    element: <Login />,
+    // element: <AuthRoute loginOption={false} component={<Login />} />,
   },
   {
     path: "/join",
-    element: <AuthRoute loginOption={false} component={<Join />} />,
+    element: <Join />,
+    // element: <AuthRoute loginOption={false} component={<Join />} />,
   },
   {
     path: "/logout",
@@ -41,7 +46,8 @@ const routes = [
   },
   {
     path: "/main",
-    element: <AuthRoute loginOption={true} component={<Main />} />,
+    element: <Main />,
+    // element: <AuthRoute loginOption={true} component={<Main />} />,
   },
   {
     path: "/main/:url",
@@ -49,43 +55,51 @@ const routes = [
   },
   {
     path: "/makeHopae",
-    element: <AuthRoute loginOption={true} component={<MakeHopae />} />,
+    element: <MakeHopae />,
+    // element: <AuthRoute loginOption={true} component={<MakeHopae />} />,
   },
   {
     path: "/makeGiwaHouse",
-    element: <AuthRoute loginOption={true} component={<MakeGiwaHouse />} />,
+    element: <MakeGiwaHouse />,
+    // element: <AuthRoute loginOption={true} component={<MakeGiwaHouse />} />,
   },
   // {
   //   path: "/oauth/kakao/callback",
   //   element: <AuthRoute loginOption={false} component={<KakaoLogin />} />,
   // },
-  {
-    path: "/oauth/naver/callback",
-    element: <AuthRoute loginOption={false} component={<NaverLogin />} />,
-  },
+  // 이 부분은 카카오 로그인이라 따로 처리해야함
+  // {
+  //   path: "/oauth/naver/callback",
+  //   element: <AuthRoute loginOption={false} component={<NaverLogin />} />,
+  // },
   {
     path: "/findPwd",
-    element: <AuthRoute loginOption={false} component={<FindPwd />} />,
+    element: <FindPwd />,
+    // element: <AuthRoute loginOption={false} component={<FindPwd />} />,
   },
   {
     /* 마이페이지 - 보관함 */
     path: "/storageGiwa",
-    element: <AuthRoute loginOption={true} component={<StorageGiwa />} />,
+    element: <StorageGiwa />,
+    // element: <AuthRoute loginOption={true} component={<StorageGiwa />} />,
   },
   {
     /* 회원탈퇴 */
     path: "/withdrawal",
-    element: <AuthRoute loginOption={true} component={<Withdrawal />} />,
+    element: <Withdrawal />,
+    // element: <AuthRoute loginOption={true} component={<Withdrawal />} />,
   },
   {
     /* 마이페이지 */
     path: "/myPage",
-    element: <AuthRoute loginOption={true} component={<MyPage />} />,
+    element: <MyPage />,
+    // element: <AuthRoute loginOption={true} component={<MyPage />} />,
   },
   {
     /* 마이페이지 - 설정 */
     path: "/setting",
-    element: <AuthRoute loginOption={true} component={<Setting />} />,
+    element: <Setting />,
+    // element: <AuthRoute loginOption={true} component={<Setting />} />,
   },
   {
     path: "/changePwd",
@@ -93,7 +107,8 @@ const routes = [
   },
   {
     path: "/confirmPwd",
-    element: <AuthRoute loginOption={true} component={<ConfirmPwd />} />,
+    element: <ConfirmPwd />,
+    // element: <AuthRoute loginOption={true} component={<ConfirmPwd />} />,
   },
   /* 404 에러 */
   {
