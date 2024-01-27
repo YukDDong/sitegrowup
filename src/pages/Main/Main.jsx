@@ -73,65 +73,94 @@ const Main = () => {
   }, [copyLinkPop]);
 
   useEffect(() => {
-    const requestData = url ? url : userInfo.boardId;
-    getGiwaHouseApi(requestData).then((result) => {
-      if (result.data.status === "SUCCESS") {
-        const giwaHouseData = result.data.data;
-        setGiwaHouse(giwaHouseData);
-        dispatch(
-          getGiwaHouse({
-            giwaColor: giwaHouseData.broadStyle.colorCode,
-            background: giwaHouseData.broadStyle.backGroundCode,
-            friend: giwaHouseData.broadStyle.friendCode,
-          })
-        );
-        setInitGiwaHouse({
-          giwaColor: giwaHouseData.broadStyle.colorCode,
-          background: giwaHouseData.broadStyle.backGroundCode,
-          friend: giwaHouseData.broadStyle.friendCode,
-        });
-        return;
-      } else {
-        // alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
-        navigate("/login");
-        return;
-      }
-    });
-  }, []);
+    // const requestData = url ? url : userInfo.boardId;
+    // getGiwaHouseApi(requestData).then((result) => {
+    //   if (result.data.status === "SUCCESS") {
+    //     const giwaHouseData = result.data.data;
+    //     setGiwaHouse(giwaHouseData);
+    //     dispatch(
+    //       getGiwaHouse({
+    //         giwaColor: giwaHouseData.broadStyle.colorCode,
+    //         background: giwaHouseData.broadStyle.backGroundCode,
+    //         friend: giwaHouseData.broadStyle.friendCode,
+    //       })
+    //     );
+    //     setInitGiwaHouse({
+    //       giwaColor: giwaHouseData.broadStyle.colorCode,
+    //       background: giwaHouseData.broadStyle.backGroundCode,
+    //       friend: giwaHouseData.broadStyle.friendCode,
+    //     });
+    //     return;
+    //   } else {
+    //     // alert("기와집이 없습니다. 생성해주세요."); //임시로 넣어놓음!
+    //     navigate("/login");
+    //     return;
+    //   }
+    // });
 
-  useEffect(() => {
-    if (url) return;
-    const eventSource = new EventSourcePolyfill(
-      `${BASE_URL}/api/v1/notification/connect`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        heartbeatTimeout: 120000,
-      }
+    // 임시용 코드
+    const giwaHouseData = {
+      id: 1,
+      version: 1,
+      title: "타이틀",
+      broadStyle: {
+        colorCode: 1,
+        backGroundCode: 2,
+        friendCode: 1,
+      },
+      url: "abcdef",
+      createdTime: 1,
+      updatedTime: 1,
+    };
+    setGiwaHouse(giwaHouseData);
+    dispatch(
+      getGiwaHouse({
+        giwaColor: giwaHouseData.broadStyle.colorCode,
+        background: giwaHouseData.broadStyle.backGroundCode,
+        friend: giwaHouseData.broadStyle.friendCode,
+      })
     );
-    eventSource.addEventListener("sse", (event) => {
-      if (event.data.includes("EventStream Created.")) {
-        console.log("Received SSE event:", event.data);
-        return;
-      }
-
-      const data = JSON.parse(event.data);
-      setSseList((pre) => [...pre, data]);
+    setInitGiwaHouse({
+      giwaColor: giwaHouseData.broadStyle.colorCode,
+      background: giwaHouseData.broadStyle.backGroundCode,
+      friend: giwaHouseData.broadStyle.friendCode,
     });
-
-    eventSource.onopen = async () => {
-      await console.log("sse 연결됨!");
-      setSseList([]);
-    };
-
-    eventSource.onmessage = (e) => {};
-
-    eventSource.onerror = async (e) => {
-      await console.log(e);
-    };
-    return () => eventSource.close();
   }, []);
+
+  // SSE 관련 코드 막음
+  // useEffect(() => {
+  //   if (url) return;
+  //   const eventSource = new EventSourcePolyfill(
+  //     `${BASE_URL}/api/v1/notification/connect`,
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       heartbeatTimeout: 120000,
+  //     }
+  //   );
+  //   eventSource.addEventListener("sse", (event) => {
+  //     if (event.data.includes("EventStream Created.")) {
+  //       console.log("Received SSE event:", event.data);
+  //       return;
+  //     }
+
+  //     const data = JSON.parse(event.data);
+  //     setSseList((pre) => [...pre, data]);
+  //   });
+
+  //   eventSource.onopen = async () => {
+  //     await console.log("sse 연결됨!");
+  //     setSseList([]);
+  //   };
+
+  //   eventSource.onmessage = (e) => {};
+
+  //   eventSource.onerror = async (e) => {
+  //     await console.log(e);
+  //   };
+  //   return () => eventSource.close();
+  // }, []);
 
   const deleteSseList = (id) => {
     const filterSseList = sseList.filter((sse) => sse.id !== id);
@@ -152,25 +181,58 @@ const Main = () => {
   };
 
   useEffect(() => {
-    if (giwaHouse.id && previousPath === "/makeGiwaHouse") {
-      setCompletedGiwaHouse(true);
-    }
-    if (!giwaHouse.id) return;
-    getGiwaListApi({
-      broadId: giwaHouse.id,
-      reverse: true,
-    })
-      .then((result) => {
-        if (result.data.status === "SUCCESS") {
-          setGiwaList(result.data.data);
-        }
-        if (result.data.status === "FAIL") {
-          setGiwaList([]);
-        }
-      })
-      .catch((error) => {
-        console.error("오류:", error);
-      });
+    // 기와리스트 불러오기 차단
+    // if (giwaHouse.id && previousPath === "/makeGiwaHouse") {
+    //   setCompletedGiwaHouse(true);
+    // }
+    // if (!giwaHouse.id) return;
+    // getGiwaListApi({
+    //   broadId: giwaHouse.id,
+    //   reverse: true,
+    // })
+    //   .then((result) => {
+    //     if (result.data.status === "SUCCESS") {
+    //       setGiwaList(result.data.data);
+    //     }
+    //     if (result.data.status === "FAIL") {
+    //       setGiwaList([]);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error("오류:", error);
+    //   });
+
+    // 임시코드
+    setGiwaList([
+      {
+        id: 1,
+        version: 1,
+        message: "안녕",
+        nickName: "테스트1",
+        postStyle: {
+          id: 1,
+          shapeCode: 1,
+          sortCode: 1,
+          fontSize: 1,
+          fontColorCode: 1,
+        },
+        createdTime: 1,
+      },
+      {
+        id: 2,
+        version: 1,
+        message: "하이",
+        nickName: "테스트2",
+        postStyle: {
+          id: 2,
+          shapeCode: 2,
+          sortCode: 2,
+          fontSize: 2,
+          fontColorCode: 2,
+        },
+        createdTime: 2,
+      },
+    ]);
   }, [giwaHouse, completedGiwa, sseList]);
 
   useEffect(() => {
