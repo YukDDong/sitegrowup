@@ -71,20 +71,19 @@ const Join = () => {
   // 회원가입 가능 판단
   const onJoinSubmit = (e) => {
     e.preventDefault();
-    if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm && isValid.isEmeilCheck) {
+    if (isValid.isEmail && isValid.isPassword && isValid.isPasswordConfirm) {
       joinApi({
         email: data.userId,
         password: data.pwd,
       }).then((result) => {
-        console.log(result.status);
-        if (result.status === 200) {
+        if (result.data.status === "SUCCESS") {
           // modal 열기
           setIsModalOpen(true);
           // 로그인 화면으로 이동
           // handleClick();
         }
         // TODO-GOGI: 에러처리부분 백엔드와 얘기해서 추가 로직 구현해야함
-        if (result.status === 500) {
+        if (result.data.status === "FAIL") {
           console.log("error500");
         }
       });
@@ -93,7 +92,7 @@ const Join = () => {
 
   /* 이메일 중복확인 */
   const onEmailCheck = (e) => {
-    console.log(data.userId)
+    console.log(data.userId);
     e.preventDefault();
     if (!e.target.classList.contains("available")) {
       checkEmailApi(data.userId).then((result) => {
@@ -147,14 +146,14 @@ const Join = () => {
             msg="사용할 수 있는 이메일입니다."
             buttonText="확인"
             onClickBtn={() => setEmailCheckModal(false)}
-          // visibleFtn={visibleFtn}
+            // visibleFtn={visibleFtn}
           />
         ) : (
           <ModalBasic
             msg="이미 가입된 회원 입니다."
             buttonText="확인"
             onClickBtn={() => setEmailCheckModal(false)}
-          // visibleFtn={visibleFtn}
+            // visibleFtn={visibleFtn}
           />
         )
       ) : null}
@@ -178,25 +177,19 @@ const Join = () => {
 
             {/* Email 판별  */}
             {data.userId !== "" ? (
-              
               // 유효한 Email
               isValid.isEmail ? (
-
                 // 중복 확인되지 않았을 때
-                (!isValid.isEmeilCheck ? (
+                !isValid.isEmeilCheck ? (
                   <IsFalse>이메일 중복확인이 되지 않았습니다.</IsFalse>
-                )
-
-                // 중복 확인 되었을 때
-                : null)
-
-              // 유효하지 않은 Email
+                ) : // 중복 확인 되었을 때
+                null
               ) : (
+                // 유효하지 않은 Email
                 <IsFalse>이메일 형식에 맞지 않는 메일 주소입니다.</IsFalse>
               )
-
-            // 비어있을 때
-            ) : null}
+            ) : // 비어있을 때
+            null}
 
             {/* 비밀번호 */}
             <InputPwd
@@ -206,8 +199,11 @@ const Join = () => {
             />
 
             {/* 비밀번호 판별 */}
-            {((data.pwd !== "") && (!isValid.isPassword)) ? (
-              <IsFalse>비밀번호는 영문 대/소 문자, 숫자, 특수기호를 조합해서 사용하세요.</IsFalse>
+            {data.pwd !== "" && !isValid.isPassword ? (
+              <IsFalse>
+                비밀번호는 영문 대/소 문자, 숫자, 특수기호를 조합해서
+                사용하세요.
+              </IsFalse>
             ) : (
               <CheckInfo>
                 <span>* </span>

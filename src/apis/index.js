@@ -14,11 +14,11 @@ export const client = axios.create({
 
 // 요청보내기 전에 localstorage에 토큰이 있는지 판단 후
 // 있으면 토큰 값을 요청에 담아서 보냅니다.
-client.interceptors.request.use(async (config) => {
-  const accessToken = getItem("AUTH");
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
-  }
+// client.interceptors.request.use(async (config) => {
+//   const accessToken = getItem("AUTH");
+//   if (accessToken) {
+//     config.headers.Authorization = `Bearer ${accessToken}`;
+//   }
 
-  return config;
-});
+//   return config;
+// });
